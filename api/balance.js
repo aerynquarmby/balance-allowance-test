@@ -1,8 +1,14 @@
 const { ethers } = require('ethers');
-const provider = new ethers.providers.JsonRpcProvider('https://polygon.llamarpc.com');
+const networks = require('./networks');
 
 module.exports = async (req, res) => {
-    const { address, tokenAddress } = req.query; // Parameters are passed in the query string
+    const { address, tokenAddress, network } = req.query;
+
+    if (!networks[network]) {
+        return res.status(400).json({ error: 'Unsupported network' });
+    }
+
+    const provider = new ethers.providers.JsonRpcProvider(networks[network].rpcUrl);
 
     try {
         const tokenContract = new ethers.Contract(tokenAddress, [
