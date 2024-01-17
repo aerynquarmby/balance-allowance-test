@@ -1,8 +1,12 @@
 const { ethers } = require('ethers');
 
 module.exports = async (req, res) => {
-    const { ownerAddress, spenderAddress, tokenName, network } = req.query;
+    let { ownerAddress, spenderAddress, tokenName, network } = req.query;
 
+    // Convert to lowercase
+    tokenName = tokenName.toLowerCase();
+    network = network.toLowerCase();
+    
     const tokenAddresses = {
         avalanche: { wavax: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7' },
         linea: { weth: '0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f' },
@@ -18,7 +22,7 @@ module.exports = async (req, res) => {
         case 'linea':
             rpcUrl = 'https://rpc.linea.build';
             break;
-        case 'bnbChain':
+        case 'bnb':
             rpcUrl = 'https://bsc-dataseed.bnbchain.org';
             break;
         case 'polygon':
