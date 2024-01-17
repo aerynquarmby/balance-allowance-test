@@ -1,14 +1,27 @@
 const { ethers } = require('ethers');
-const networks = require('./networks');
 
 module.exports = async (req, res) => {
     const { address, tokenAddress, network } = req.query;
 
-    if (!networks[network]) {
-        return res.status(400).json({ error: 'Unsupported network' });
+    let rpcUrl;
+    switch (network) {
+        case 'avalanche':
+            rpcUrl = 'https://api.avax.network/ext/bc/C/rpc';
+            break;
+        case 'linea':
+            rpcUrl = 'https://rpc.linea.build';
+            break;
+        case 'bnbChain':
+            rpcUrl = 'https://bsc-dataseed.bnbchain.org';
+            break;
+        case 'polygon':
+            rpcUrl = 'https://polygon.llamarpc.com';
+            break;
+        default:
+            return res.status(400).json({ error: 'Unsupported network' });
     }
 
-    const provider = new ethers.providers.JsonRpcProvider(networks[network].rpcUrl);
+    const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
 
     try {
         const tokenContract = new ethers.Contract(tokenAddress, [
