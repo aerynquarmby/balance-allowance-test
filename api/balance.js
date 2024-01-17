@@ -8,10 +8,6 @@ module.exports = async (req, res) => {
         return res.status(400).json({ error: 'Unsupported network' });
     }
 
-    if (!ethers.utils.isAddress(address) || !ethers.utils.isAddress(tokenAddress)) {
-        return res.status(400).json({ error: 'Invalid Ethereum address' });
-    }
-
     const provider = new ethers.providers.JsonRpcProvider(networks[network].rpcUrl);
 
     try {
@@ -27,6 +23,6 @@ module.exports = async (req, res) => {
         
         res.status(200).json({ balance: roundedBalance });
     } catch (error) {
-        res.status(500).json({ error: `Contract interaction failed: ${error.message}` });
+        res.status(500).json({ error: error.message });
     }
 };
