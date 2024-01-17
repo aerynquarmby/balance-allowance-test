@@ -1,17 +1,14 @@
 const { ethers } = require('ethers');
 
 module.exports = async (req, res) => {
-    let { ownerAddress, spenderAddress, tokenAddress, network } = req.query;
-    network = network.toLowerCase();
+    const { ownerAddress, spenderAddress, tokenName, network } = req.query;
 
-    const tokens = {
-        avalanche: { 'wavax': '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7' },
-        linea: { 'weth': '0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f' },
-        bnbChain: { 'wbnb': '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c' },
-        polygon: { 'wmatic': '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270' }
+    const tokenAddresses = {
+        avalanche: { wavax: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7' },
+        linea: { weth: '0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f' },
+        bnbChain: { wbnb: '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c' },
+        polygon: { wmatic: '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270' }
     };
-
-    tokenAddress = tokens[network][tokenAddress.toLowerCase()] || tokenAddress.toLowerCase();
 
     let rpcUrl;
     switch (network) {
@@ -21,7 +18,7 @@ module.exports = async (req, res) => {
         case 'linea':
             rpcUrl = 'https://rpc.linea.build';
             break;
-        case 'bnbchain':
+        case 'bnbChain':
             rpcUrl = 'https://bsc-dataseed.bnbchain.org';
             break;
         case 'polygon':
@@ -29,6 +26,11 @@ module.exports = async (req, res) => {
             break;
         default:
             return res.status(400).json({ error: 'Unsupported network' });
+    }
+
+    const tokenAddress = tokenAddresses[network][tokenName];
+    if (!tokenAddress) {
+        return res.status(400).json({ error: 'Unsupported token name or network' });
     }
 
     const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
