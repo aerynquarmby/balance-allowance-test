@@ -21,7 +21,7 @@ module.exports = async (req, res) => {
         case 'linea':
             rpcUrl = 'https://rpc.linea.build';
             break;
-        case 'bnbChain':
+        case 'bnbchain':
             rpcUrl = 'https://bsc-dataseed.bnbchain.org';
             break;
         case 'polygon':
