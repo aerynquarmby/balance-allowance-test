@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
     const tokenAddresses = {
         avalanche: { wavax: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7' },
         linea: { weth: '0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f' },
-        bnbChain: { wbnb: '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c' },
+        bnb: { wbnb: '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c' },
         polygon: { wmatic: '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270' }
     };
 
