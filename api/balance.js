@@ -32,7 +32,7 @@ module.exports = async (req, res) => {
         const balance = await tokenContract.balanceOf(address);
         const decimals = await tokenContract.decimals();
         const formattedBalance = ethers.utils.formatUnits(balance, decimals);
-        const roundedBalance = Number(formattedBalance).toFixed(2);
+        const roundedBalance = Number(formattedBalance).toFixed(4);
         
         res.status(200).json({ balance: roundedBalance });
     } catch (error) {
