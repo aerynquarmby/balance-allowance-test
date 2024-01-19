@@ -11,8 +11,10 @@ module.exports = async (req, res) => {
         avalanche: { wavax: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7' },
         linea: { weth: '0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f' },
         bnb: { wbnb: '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c' },
-        polygon: { wmatic: '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270' },
-        polygon: { usdt: '0xc2132D05D31c914a87C6611C10748AEb04B58e8F' },
+        polygon: {
+            wmatic: '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270',
+            usdt: '0xc2132D05D31c914a87C6611C10748AEb04B58e8F'
+        },
         avalanche_testnet: { usdc: '0x5425890298aed601595a70AB815c96711a31Bc65' },
         linea_testnet: { weth: '0x2C1b868d6596a18e32E61B901E4060C872647b6C' },
         bnb_testnet: { busd: '0xeD24FC36d5Ee211Ea25A80239Fb8C4Cfd80f12Ee' },
