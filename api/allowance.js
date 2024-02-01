@@ -31,7 +31,7 @@ module.exports = async (req, res) => {
             rpcUrl = 'https://bsc-dataseed.bnbchain.org';
             break;
         case 'polygon':
-            rpcUrl = 'https://polygon.llamarpc.com';
+            rpcUrl = 'https://polygon-rpc.com';
             break;
         case 'avalanche_testnet':
             rpcUrl = 'https://avalanche-fuji.drpc.org/';
