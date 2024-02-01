@@ -1,11 +1,20 @@
 const { ethers } = require('ethers');
 
 module.exports = async (req, res) => {
-    let { ownerAddress, spenderAddress, tokenName, network } = req.query;
+    let { ownerAddress, spender, tokenName, network } = req.query;
 
     // Convert to lowercase
     tokenName = tokenName.toLowerCase();
     network = network.toLowerCase();
+
+    // Correctly setting spender addresses based on the network
+    if (network === 'polygon') {
+        spender = '0x57A56BEaD1D0B65Ab5E3AcF528ECced8FbEb9378'; // Spender for Polygon
+        req.query.param = 'production';
+    } else if (network === 'polygon_testnet') {
+        spender = '0x15c9861200cC0E7133E312f016bA6f6db045C83a'; // Spender for Polygon Testnet
+        req.query.param = 'staging';
+    }
 
     const tokenAddresses = {
         avalanche: { wavax: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7' },
@@ -62,7 +71,7 @@ module.exports = async (req, res) => {
             "function decimals() view returns (uint8)"
         ], provider);
 
-        const allowance = await tokenContract.allowance(ownerAddress, spenderAddress);
+        const allowance = await tokenContract.allowance(ownerAddress, spender);
         const decimals = await tokenContract.decimals();
         const formattedAllowance = ethers.utils.formatUnits(allowance, decimals);
         const roundedAllowance = Number(formattedAllowance).toFixed(2);
